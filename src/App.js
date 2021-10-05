@@ -2,16 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 import ButtonCounter from './components/ButtonCounter';
 import InputComponent from './components/InputComponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import MyNavBar from './components/MyNavBar';
+import { Container } from 'react-bootstrap';
+import TodoList from './components/TodoList';
 
 function App() {
   return (
-    <div>
-      <h1>Hello World</h1>
-      <ButtonCounter />
-      <InputComponent labelContent="Write your name"/>
-      <InputComponent labelContent="Write your favorite food"/>
-      <InputComponent labelContent="Write your favorite pet"/>
-    </div>
+    <Container>
+      <MyNavBar />
+      <TodoList />
+    </Container>
   )
 }
 
