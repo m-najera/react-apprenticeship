@@ -3,9 +3,19 @@ import { Form, Button } from "react-bootstrap"
 function TodoList() {
     const [todoList, setTodoList] = useState([])
     const [newItem, setNewItem] = useState("")
+
+    function onDeleteItem(index) {
+        let newTodoList = [...todoList]
+        newTodoList.splice(index, 1)
+        setTodoList(newTodoList)
+    }
+
     return (
         <div>
-            <Form>
+            <Form onSubmit={(e) => {
+                e.preventDefault()
+                setTodoList([...todoList, newItem])
+            }}>
                 <Form.Group className="mb-3" controlId="todo-list">
                     <Form.Label>TODO item:</Form.Label>
                     <Form.Control type="text"
@@ -38,13 +48,13 @@ function TodoList() {
                 </Button>
             </Form>
             {todoList.map((element, i) => (
-                <TodoItem value={element} index={i} />
+                <TodoItem value={element} index={i} onDeleteItem={onDeleteItem} />
             ))}
         </div>
     )
 }
 
-function TodoItem({ value, index }) {
+function TodoItem({ value, index, onDeleteItem }) {
     const [checked, setChecked] = useState(false)
     return (
         <Form.Check
@@ -55,11 +65,14 @@ function TodoItem({ value, index }) {
             <Form.Check.Input type={'checkbox'} onChange={(e) => {
                 setChecked(e.target.checked)
             }} />
-            <Form.Check.Label 
+            <Form.Check.Label
                 style={{ textDecoration: checked ? "line-through" : "none" }}
             >
                 {value}
             </Form.Check.Label>
+            <Button variant="warning" size="sm" onClick={() => onDeleteItem(index)}>
+                Delete
+            </Button>
         </Form.Check>
     )
 }
